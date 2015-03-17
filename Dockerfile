@@ -1,3 +1,4 @@
+# Use the Microsoft ASP.NET vNext base
 FROM microsoft/aspnet
 
 # Install Node.js and Grunt
@@ -12,9 +13,12 @@ RUN make
 RUN make install
 RUN npm install -g grunt-cli
 
+# Copy the actual MVC web application
 COPY . /app
 WORKDIR /app
+# Restor packages
 RUN ["kpm", "restore"]
 
+# Expose a private port and start the server
 EXPOSE 5004
 ENTRYPOINT ["k", "kestrel"]
